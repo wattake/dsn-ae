@@ -1,0 +1,3 @@
+$(eval $(call addlib,appsyscall))
+
+APPSYSCALL_SRCS-y += $(APPSYSCALL_BASE)/main.c

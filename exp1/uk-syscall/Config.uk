@@ -1,0 +1,63 @@
+config LIBMRTIME_SYSCALL
+    bool "measure time of syscall"
+    help
+        syscall
+
+if LIBMRTIME_SYSCALL
+choice 
+    prompt "Target Function"
+    default LIBMRTIME_SYSCALL_GETPID
+
+config LIBMRTIME_SYSCALL_GETPID
+    bool "getpid"
+    help
+        getpid
+
+config LIBMRTIME_SYSCALL_OPEN
+    bool "open"
+    help
+        open
+
+config LIBMRTIME_SYSCALL_READ
+    bool "read"
+    help
+        read
+
+config LIBMRTIME_SYSCALL_WRITE
+    bool "write"
+    help
+        write
+
+config LIBMRTIME_SYSCALL_CLOSE
+    bool "close"
+    help
+        close
+
+config LIBMRTIME_SYSCALL_FSTAT
+    bool "fstat"
+    help
+        fstat
+
+config LIBMRTIME_SYSCALL_SOCKET
+    bool "socket"
+    help
+        socket
+
+
+config LIBMRTIME_SYSCALL_SOCKWRITE
+    bool "socket write"
+    help
+        Server replays requests of clients.
+
+config LIBMRTIME_SYSCALL_SOCKREAD
+    bool "socket read"
+    help
+        Server replays requests of clients.
+
+config LIBMRTIME_SYSCALL_SHUTDOWN
+    bool "close connection"
+    help
+        Close connection.
+
+endchoice
+endif
