@@ -1,0 +1,5 @@
+config LIBMRTIME_REBOOT
+    bool "measure time of reboot"
+    help
+        reboot
+    default y
