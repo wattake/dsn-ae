@@ -1,12 +1,12 @@
 #!/bin/bash
 cd vp-app
-cp sqlite-config .config
 make clean
-cp nginx-config .config
-make clean
-cp redis-config .config
-make clean
+rm -f build/*-sqlite_*
+rm -f build/*-redis_*
+rm -f build/*-nginx_*
 
-# rm -f build/*-sqlite_*
-# rm -f build/*-redis_*
-# rm -f build/*-nginx_*
+cd ../uk-app
+make clean
+rm -f build/*-sqlite_*
+rm -f build/*-redis_*
+rm -f build/*-nginx_*
