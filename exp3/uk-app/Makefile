@@ -24,7 +24,6 @@ addbr:
 	ip l set dev $(BRG) up
 	sed -i '$$aallow $(BRG)' $(QEMU_BRG_CONF)
 
-
 delbr:
 	ip link del $(BRG)
 	sed -i '/allow $(BRG)/d' $(QEMU_BRG_CONF)
