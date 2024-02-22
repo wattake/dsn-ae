@@ -31,7 +31,7 @@ delbr:
 
 run-sqlite:
 	qemu-img create -f qcow2 snapshots.qcow2 2G
-	$(QEMU) -enable-kvm -m 4G -nographic  -kernel ./build/$(OS)-$(APP)_kvm-x86_64 \
+	$(QEMU) -enable-kvm -m 2G -nographic  -kernel ./build/$(OS)-$(APP)_kvm-x86_64 \
 	    -fsdev local,id=myid,path=$(FS),security_model=none \
 	    -device virtio-9p-pci,fsdev=myid,mount_tag=rootfs,disable-modern=on,disable-legacy=off\
         -cpu host \
@@ -40,8 +40,9 @@ run-sqlite:
 	rm snapshots.qcow2
 
 run-redis:
+	rm -f redis-fs/appendonly.aof
 	qemu-img create -f qcow2 snapshots.qcow2 2G
-	$(QEMU) -enable-kvm -m 4G -nographic  -kernel ./build/$(OS)-$(APP)_kvm-x86_64 \
+	$(QEMU) -enable-kvm -m 2G -nographic  -kernel ./build/$(OS)-$(APP)_kvm-x86_64 \
 	    -fsdev local,id=myid,path=$(FS),security_model=none \
 	    -device virtio-9p-pci,fsdev=myid,mount_tag=rootfs,disable-modern=on,disable-legacy=off\
         -netdev bridge,id=en0,br=$(BRG),helper=$(QEMU_HELPER) \
@@ -54,7 +55,7 @@ run-redis:
 
 run-nginx:
 	qemu-img create -f qcow2 snapshots.qcow2 2G
-	$(QEMU) -enable-kvm -m 4G -nographic  -kernel ./build/$(OS)-$(APP)_kvm-x86_64 \
+	$(QEMU) -enable-kvm -m 2G -nographic  -kernel ./build/$(OS)-$(APP)_kvm-x86_64 \
 	    -fsdev local,id=myid,path=$(FS),security_model=none \
 	    -device virtio-9p-pci,fsdev=myid,mount_tag=rootfs,disable-modern=on,disable-legacy=off\
         -netdev bridge,id=en0,br=$(BRG),helper=$(QEMU_HELPER) \
@@ -68,7 +69,7 @@ run-nginx:
 
 run-httpreply:
 	qemu-img create -f qcow2 snapshots.qcow2 2G
-	$(QEMU) -enable-kvm -m 4G -nographic  -kernel ./build/$(OS)-$(APP)_kvm-x86_64 \
+	$(QEMU) -enable-kvm -m 2G -nographic  -kernel ./build/$(OS)-$(APP)_kvm-x86_64 \
         -netdev bridge,id=en0,br=$(BRG),helper=$(QEMU_HELPER) \
 		-append "netdev.ipv4_addr=$(ADDR) netdev.ipv4_gw_addr=$(GADDR) netdev.ipv4_subnet_mask=255.255.255.0 --"	\
 		-device virtio-net-pci,netdev=en0 \
