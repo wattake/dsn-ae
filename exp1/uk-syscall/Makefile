@@ -10,7 +10,7 @@ QEMU_BRG_CONF := $(QEMU_DIR)/etc/qemu/bridge.conf
 OS := uk
 APP := syscall
 BRG := virbr0
-FS := syscall-fs
+FS := $(APP)-fs
 
 all:
 	@$(MAKE) -C $(UK_ROOT) A=$(PWD) L=$(LIBS)
@@ -32,13 +32,14 @@ delbr:
 run:
 	mkdir -p $(FS)
 	qemu-img create -f qcow2 ./snapshots.qcow2 1G
-	$(QEMU) -m 2G -nographic -kernel ./build/$(OS)-$(APP)-$(SYSCALL)_kvm-x86_64 \
+	$(QEMU) -m 2G -nographic -kernel ./build/$(OS)-$(SYSCALL)_kvm-x86_64 \
 	    -fsdev local,id=myid,path=$(FS),security_model=none \
 	    -device virtio-9p-pci,fsdev=myid,mount_tag=rootfs,disable-modern=on,disable-legacy=off \
 		-netdev bridge,id=en0,br=$(BRG),helper=$(QEMU_HELPER) \
 		-append "netdev.ipv4_addr=172.44.0.2 netdev.ipv4_gw_addr=172.44.0.1 netdev.ipv4_subnet_mask=255.255.255.0 --" \
 	    -device virtio-net-pci,netdev=en0 \
 	    -drive if=none,format=qcow2,file=./snapshots.qcow2 \
-	    -cpu host -no-reboot -enable-kvm  > ../result/$(OS)-$(SYSCALL).csv
+	    -cpu host -no-reboot -enable-kvm 
+#  > ../result/$(OS)-$(SYSCALL).csv
 	rm ./snapshots.qcow2
 	rm -r $(FS)

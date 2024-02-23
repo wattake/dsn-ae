@@ -1,49 +1,63 @@
 #!/bin/bash
 
-syscalls=(
-    "getpid"
-    "open"
-    "read"
-    "write"
-    "close"
-    "sockread"
-    "sockwrite"
-)
-oses=(
-    "vp"
-    "nosals"
-    "das"
-    "netm"
-    "fsm"
-)
+# oses=(
+#     "vp"
+#     "nosals"
+#     "das"
+#     "netm"
+#     "fsm"
+# )
+
+# syscalls=(
+#     "getpid"
+#     "open"
+#     "read"
+#     "write"
+#     "close"
+#     "sockread"
+#     "sockwrite"
+# )
 
 
+if [ $# -ne 2 ];then
+    exit 1
+fi
 
-cd uk-syscall
+os=$1
+syscall=$2
 
-sudo make addbr
 
-for syscall in "${syscalls[@]}"; do
-    if [ ${syscall} = "sockread" ] || [ ${syscall} = "sockwrite" ]; then
-        sleep 5 && ./../wget_req.sh 100 &
+if [ ${os} = "uk" ]; then
+    cd uk-syscall
+else
+    cd vp-syscall
+fi
+
+make addbr
+
+if [ ${syscall} = "sockread" ] || [ ${syscall} = "sockwrite" ]; then
+    if [ ${os} != "nosals" ]; then
+        sleep 5 && ./../wget_req.sh 101 & # 100 exec for performance + 1 exec for log entries
+    else
+        sleep 5 && ./../wget_req.sh 1 & # 1 exec for log entries
     fi
-    sudo make run SYSCALL=${syscall}
-done
+fi
+make run OS=${os} SYSCALL=${syscall}
 
-cd ..
-cd vp-syscall
+make delbr
 
-for os in "${oses[@]}"; do
-    for syscall in "${syscalls[@]}"; do
-        if [ ${syscall} = "sockread" ] || [ ${syscall} = "sockwrite" ]; then
-            if [ ${os} != "nosals" ]; then
-                sleep 5 && ./../wget_req.sh 101 & # 100 exec for performance + 1 exec for log entries
-            else
-                sleep 5 && ./../wget_req.sh 1 & # 1 exec for log entries
-            fi
-        fi
-        sudo make run OS=${os} SYSCALL=${syscall}
-    done
-done
+# cd ..
+# cd vp-syscall
 
-sudo make delbr
+# for os in "${oses[@]}"; do
+#     for syscall in "${syscalls[@]}"; do
+#         if [ ${syscall} = "sockread" ] || [ ${syscall} = "sockwrite" ]; then
+#             if [ ${os} != "nosals" ]; then
+#                 sleep 5 && ./../wget_req.sh 101 & # 100 exec for performance + 1 exec for log entries
+#             else
+#                 sleep 5 && ./../wget_req.sh 1 & # 1 exec for log entries
+#             fi
+#         fi
+#         sudo make run OS=${os} SYSCALL=${syscall}
+#     done
+# done

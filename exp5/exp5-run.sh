@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ $# -ne 1 ];then
+    exit 1
+fi
+
 os=$1
 
 if [ ${os} = "uk" ]; then
