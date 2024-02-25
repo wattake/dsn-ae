@@ -15,6 +15,7 @@ for app in "${apps[@]}"; do
     fi
 
     cp vp-${app}-config .config
+    cp ${app}-Makefile Makefile
     make clean
 
     sed -i "s/CONFIG_UK_DEFNAME=".*"/CONFIG_UK_DEFNAME=\"vp-${app}\"/g" .config
@@ -22,6 +23,7 @@ for app in "${apps[@]}"; do
     make
 
     cp das-${app}-config .config
+    cp ${app}-Makefile Makefile
     make # for das
 
     sed -i "s/# CONFIG_LIBVAMPOS_MERGE_FS.*/CONFIG_LIBVAMPOS_MERGE_FS=y/g" .config

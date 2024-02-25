@@ -1,6 +1,6 @@
 #!/bin/bash
-connection=30
-thread=16
+connection=40
+thread=25
 duration=1m
 # address = "http://192.168.200.111/"
 

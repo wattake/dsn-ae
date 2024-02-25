@@ -8,4 +8,4 @@ if [ $# -ne 1 ];then
     exit 1
 fi
 
-wrk -c$connection -t$thread -d$duration $1 > ./../result/httpreply_get
+wrk -c$connection -t$thread -d$duration $1

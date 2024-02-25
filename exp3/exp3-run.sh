@@ -43,7 +43,7 @@ if [ ${app} = "nginx" ]; then
     make delbr
 fi
 if [ ${app} = "nginx-separate" ]; then
-    make run-nginx OS=${os} APP=${app} BRG=br0 GADDR=192.168.200.1 ADDR=192.168.200.111 # remote
+    make run-nginx OS=${os} APP=nginx BRG=br0 GADDR=192.168.200.1 ADDR=192.168.200.111 # remote
 fi
 if [ ${app} = "redis" ]; then
     make addbr

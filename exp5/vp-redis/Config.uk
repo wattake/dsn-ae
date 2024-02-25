@@ -1,0 +1,30 @@
+config APPREDIS_EXP5
+    bool "insert failure"
+    default y
+
+if APPREDIS_EXP5
+choice 
+    prompt "Target Component"
+    default APPREDIS_FAILURE_VFS
+
+config APPREDIS_FAILURE_VFS
+    bool "vfs"
+    help
+        vfs
+
+config APPREDIS_FAILURE_9PFS
+    bool "9pfs"
+    help
+        9pfs
+if LIBLWIP
+config APPREDIS_FAILURE_LWIP
+    bool "lwip"
+    help
+        lwip
+endif
+config APPREDIS_FAILURE_PROCESS
+    bool "process"
+    help
+        process
+endchoice
+endif

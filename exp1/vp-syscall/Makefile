@@ -30,7 +30,7 @@ delbr:
 run:
 	mkdir -p $(FS)
 	qemu-img create -f qcow2 ./snapshots.qcow2 1G
-	$(QEMU) -m 2G -nographic -kernel ./build/$(OS)-$(APP)-$(SYSCALL)_kvm-x86_64 \
+	$(QEMU) -m 4G -nographic -kernel ./build/$(OS)-$(APP)-$(SYSCALL)_kvm-x86_64 \
 	    -fsdev local,id=myid,path=$(FS),security_model=none \
 	    -device virtio-9p-pci,fsdev=myid,mount_tag=rootfs,disable-modern=on,disable-legacy=off \
 		-netdev bridge,id=en0,br=$(BRG),helper=$(QEMU_HELPER) \
@@ -44,7 +44,7 @@ run:
 dbg:
 	mkdir -p $(FS)
 	qemu-img create -f qcow2 ./snapshots.qcow2 1G
-	$(QEMU) -s -S -m 2G -nographic  -kernel ./build/$(OS)-$(APP)-$(SYSCALL)_kvm-x86_64.dbg \
+	$(QEMU) -s -S -m 4G -nographic  -kernel ./build/$(OS)-$(APP)-$(SYSCALL)_kvm-x86_64.dbg \
 		-fsdev local,id=myid,path=$(FS),security_model=none \
 		-device virtio-9p-pci,fsdev=myid,mount_tag=rootfs,disable-modern=on,disable-legacy=off \
 		-netdev bridge,id=en0,br=$(BRG),helper=$(QEMU_HELPER) \
